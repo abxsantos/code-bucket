@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid'
 import { Image } from 'expo-image';
 import { Platform, StyleSheet } from 'react-native';
 
@@ -5,8 +6,30 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useEffect, useState } from 'react';
 
 export default function HomeScreen() {
+  const [isConnected, setIsConnected] = useState(false)
+  const [error, setError] = useState<string | undefined>(undefined)
+
+  // useEffect(() => {
+  //   const connect = async () => {
+  //     console.log('Connecting to scale...', nanoid())
+  //     scanForScale(
+  //       (weight: number) => {
+  //         setIsConnected(true)
+  //         setError(undefined)
+  //         console.log(`Weight: ${weight} kg`)
+  //       },
+  //       (error: string | undefined) => {
+  //         setIsConnected(false)
+  //         setError(error)
+  //       },
+  //     )
+  //   }
+  //   connect()
+  // }, [])
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -17,7 +40,9 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Welcome! {nanoid()}</ThemedText>
+        <ThemedText type="title">{isConnected}</ThemedText>
+        <ThemedText type="title">{error}</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
