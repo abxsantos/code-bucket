@@ -73,6 +73,7 @@ const startScan = async (
   setError: (error: string | undefined) => void,
 ) => {
   try {
+    console.log("Starting scan for scale...")
     device = createDevice()
     if (!device) {
       setError("Invalid device type")

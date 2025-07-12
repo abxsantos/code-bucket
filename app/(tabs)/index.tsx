@@ -1,3 +1,4 @@
+import 'react-native-get-random-values'
 import { nanoid } from 'nanoid'
 import { Image } from 'expo-image';
 import { Platform, StyleSheet } from 'react-native';
@@ -7,28 +8,29 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useEffect, useState } from 'react';
+import { scanForScale } from '@/components/device-connector';
 
 export default function HomeScreen() {
   const [isConnected, setIsConnected] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
 
-  // useEffect(() => {
-  //   const connect = async () => {
-  //     console.log('Connecting to scale...', nanoid())
-  //     scanForScale(
-  //       (weight: number) => {
-  //         setIsConnected(true)
-  //         setError(undefined)
-  //         console.log(`Weight: ${weight} kg`)
-  //       },
-  //       (error: string | undefined) => {
-  //         setIsConnected(false)
-  //         setError(error)
-  //       },
-  //     )
-  //   }
-  //   connect()
-  // }, [])
+  useEffect(() => {
+    const connect = async () => {
+      console.log('Connecting to scale...', nanoid())
+      scanForScale(
+        (weight: number) => {
+          setIsConnected(true)
+          setError(undefined)
+          console.log(`Weight: ${weight} kg`)
+        },
+        (error: string | undefined) => {
+          setIsConnected(false)
+          setError(error)
+        },
+      )
+    }
+    connect()
+  }, [])
 
   return (
     <ParallaxScrollView
